@@ -20,6 +20,10 @@ class Oxwall:
             self.wait.until(EC.visibility_of_element_located(locators.MENU_SIGNIN_BUTTON))
         except TimeoutException:
             pass  # no the main page
+        self.driver.maximize_window()
+        self.driver.get('http://127.0.0.1/oxwall/')
+        self.wait = WebDriverWait(self.driver, 10)
+        self.actions = ActionChains(self.driver)
 
     def close(self):
         self.driver.quit()
