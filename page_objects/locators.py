@@ -19,6 +19,7 @@ NEWSFEED_MESSAGES_MORE = (By.CSS_SELECTOR, "span.ow_context_more")
 NEWSFEED_MESSAGES_DELETE = (By.CSS_SELECTOR, "a[class*='newsfeed_remove_btn']")
 
 
+
 # Login windows locators
 SIGNIN_USERNAME = (By.CSS_SELECTOR, "input[name='identity']")
 SIGNIN_PASSWORD = (By.CSS_SELECTOR, "input[name='password']")
