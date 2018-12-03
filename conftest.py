@@ -6,13 +6,14 @@ from oxwall_site import Oxwall
 def app():
     app = Oxwall()
     yield app
-    app.close()
+    # app.close()
+    pass
 
 
 @pytest.fixture()
 def login_user(app):
-    app.login('admin', 'pass')
+    app.login('admin', 'Adm1n')
     yield
-    app.logout('admin')
+    app.logout()
 
 
