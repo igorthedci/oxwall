@@ -53,5 +53,13 @@ def login_user(app):
     yield
     app.logout()
 
+@pytest.fixture()
+def admin_user_old(app):
+    return {'username': 'admin', 'password': 'Adm1n'}
+
+@pytest.fixture
+def admin_user():
+    return User(username='admin', password='Adm1n')
+
 
 >>>>>>> init commit
