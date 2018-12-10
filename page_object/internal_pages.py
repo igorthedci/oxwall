@@ -1,5 +1,5 @@
 from selenium.common.exceptions import NoSuchElementException
-from page_object.locator import InternalPageLocators
+from page_object.locators import InternalPageLocators
 from page_object.page import Page
 
 

@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
-from page_object import locator
+from page_object import locators
 import time
 
 
@@ -20,17 +20,17 @@ class OxwallSite:
     def login_as(self, user):
         """ Login to Oxwall site by user"""
         driver = self.driver
-        driver.find_element(*locator.SIGN_IN_MENU).click()
-        login = driver.find_element(*locator.LOGIN_FIELD)
+        driver.find_element(*locators.SIGN_IN_MENU).click()
+        login = driver.find_element(*locators.LOGIN_FIELD)
         login.click()
         login.send_keys(user.username)
-        passw = driver.find_element(*locator.PASS_FIELD)
+        passw = driver.find_element(*locators.PASS_FIELD)
         passw.click()
         passw.send_keys(user.password)
-        driver.find_element(*locator.SIGN_IN_BUTTON).click()
+        driver.find_element(*locators.SIGN_IN_BUTTON).click()
         # Wait until grey background disappeared
         wait = WebDriverWait(driver, 5)
-        wait.until(EC.invisibility_of_element_located(locator.LOGIN_BACKGROUND))
+        wait.until(EC.invisibility_of_element_located(locators.LOGIN_BACKGROUND))
 
     def logout_as(self, user):
         menu = self.driver.find_element(By.LINK_TEXT, user["username"].title())

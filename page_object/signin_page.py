@@ -1,5 +1,5 @@
 from page_object.page import Page
-from page_object.locator import SignInLocators
+from page_object.locators import SignInLocators
 
 
 class SignInPage(Page):
