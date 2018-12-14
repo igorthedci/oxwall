@@ -1,7 +1,6 @@
 import pytest
-<<<<<<< HEAD
 from selenium import webdriver
-from oxwall_site_model import OxwallSite
+from obsolete.oxwall_site import Oxwall
 from value_models.user import User
 
 
@@ -16,15 +15,16 @@ def driver():
     # Close browser
     driver.quit()
 
-# @pytest.fixture()
-# def app(driver):
-#     app = OxwallSite(driver)
-#     return app
+@pytest.fixture()
+def app():
+    app = Oxwall()
+    yield app
+    # app.close()
+    pass
 
 @pytest.fixture()
 def admin_user():
     return User(username="admin", password="pass")
-
 
 @pytest.fixture()
 def user():
@@ -35,31 +35,3 @@ def sign_in_session(app, admin_user):
     app.login_as(admin_user)
     yield
     app.logout_as(admin_user)
-=======
-from oxwall_site import Oxwall
-
-
-@pytest.fixture()
-def app():
-    app = Oxwall()
-    yield app
-    # app.close()
-    pass
-
-
-@pytest.fixture()
-def login_user(app):
-    app.login('admin', 'Adm1n')
-    yield
-    app.logout()
-
-@pytest.fixture()
-def admin_user_old(app):
-    return {'username': 'admin', 'password': 'Adm1n'}
-
-@pytest.fixture
-def admin_user():
-    return User(username='admin', password='Adm1n')
-
-
->>>>>>> init commit
