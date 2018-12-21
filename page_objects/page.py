@@ -22,3 +22,7 @@ class Page:
 
     def find_clicable_element(self, locator):
         return
+
+    @property
+    def current_url(self):
+        return self.driver.current_url

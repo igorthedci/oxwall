@@ -15,7 +15,13 @@ class User:
     def __str__(self):
         return "User: {}, {}".format(
             self.username,
-            "admin" if self.is_admin else "user")
+            "admin" if self.is_admin else "user"
+        )
 
     def __repr__(self):
         pass
+
+
+if __name__ == "__main__":
+    user = User("Masha", "Pupkin")
+    print(user)

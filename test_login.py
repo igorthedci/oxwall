@@ -1,6 +1,5 @@
-from oxwall_site_model import OxwallSite
 from page_object.internal_pages import InternalPage
-from page_object.signin_page import SignInPage
+from page_objects.signin_page import SignInPage
 
 
 def test_positive_login(driver, user):
