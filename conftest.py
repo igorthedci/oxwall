@@ -1,10 +1,12 @@
+import json
+import os.path
 import pytest
 from selenium import webdriver
-from obsolete.oxwall_site import Oxwall
+from oxwall_site_model import OxwallSite
 from value_models.user import User
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def driver():
     # Open browser driver settings
     driver = webdriver.Chrome()
@@ -17,7 +19,7 @@ def driver():
 
 @pytest.fixture()
 def app():
-    app = Oxwall()
+    app = OxwallSite()
     yield app
     # app.close()
     pass
@@ -29,20 +31,59 @@ def login_user(app):
     yield
     app.logout()
 
+
 @pytest.fixture()
 def admin_user_old(app):
     return {'username': 'admin', 'password': 'Adm1n'}
+
 
 @pytest.fixture
 def admin_user():
     return User(username='admin', password='Adm1n')
 
-@pytest.fixture()
-def user():
-    return User(username="admin", password="pass") # TODO: parametrize to non-admin users
+
+# user_data = [
+#     {
+#         "username": "tester",
+#         "password": "secret",
+#         "real_name": "How I am?",
+#         "is_admin": False
+#      },
+#     {
+#         "username": "tester",
+#         "password": "secret",
+#         "real_name": "How I am?",
+#         "is_admin": False
+#      },
+#     {
+#         "username": "admin",
+#         "password": "Adm1n",
+#         "real_name": "ADMIN",
+#         "is_admin": True
+#      }
+# ]
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(PROJECT_DIR, "data", "user_data.json")) as f:
+    user_data = json.load(f)
+
+
+@pytest.fixture(params=user_data, ids=[str(user) for user in user_data])
+def user(request):
+    # print(request.param)
+    # return User(username="admin", password="pass", real_name="Admin")
+    # return User(username=request.param["username"], password="pass", real_name="Admin")
+    return User(**request.param)  # TODO: parametrize to non-admin users
+
 
 @pytest.fixture()
 def sign_in_session(app, admin_user):
     app.login_as(admin_user)
-    yield
+    yield user
     app.logout_as(admin_user)
+
+
+@pytest.fixture()
+def logout(driver):
+    yield
+    app = OxwallSite(driver)
+    app.dash_page.signout()

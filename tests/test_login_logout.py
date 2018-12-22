@@ -20,14 +20,16 @@ def test_positive_login(driver):
 
 
 # TODO: parametrize to users, add non-admin users
-def test_login_using_page_object(driver):
+def test_login_using_page_object(driver, user, logout):
     user = User(username="admin", password="pass")
     main_page = MainPage(driver)
     main_page.sign_in_menu.click()
     sign_in_page = SignInPage(driver)
     assert sign_in_page.is_this_page()
-    sign_in_page.input_username(user.username)
-    sign_in_page.input_password(user.password)
+    # sign_in_page.input_username(user.username)
+    sign_in_page.username_field.input(user.username)
+    # sign_in_page.input_password(user.password)
+    sign_in_page.password_field.input(user.password)
     sign_in_page.submit_form()
     dashboard_page = DashboardPage(driver)
     assert dashboard_page.is_this_page()

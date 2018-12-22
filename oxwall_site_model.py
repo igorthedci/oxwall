@@ -16,6 +16,7 @@ class OxwallSite:
         self.driver.get('http://127.0.0.1/oxwall/')
         self.wait = WebDriverWait(self.driver, 10)
         self.actions = ActionChains(self.driver)
+        self.dash_page = DashboardPage(self.driver)
 
     def login_as(self, user):
         """ Login to Oxwall site by user"""

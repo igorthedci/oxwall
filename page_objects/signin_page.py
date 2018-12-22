@@ -1,6 +1,6 @@
 from selenium.webdriver.support.expected_conditions import invisibility_of_element_located
 
-from page_objects.page import Page
+from page_objects.page import Page, InputTextElement
 from locators.locator import SignInLocators
 
 
@@ -12,7 +12,8 @@ class SignInPage(Page):
 
     @property
     def username_field(self):
-        return self.find_visible_element(SignInLocators.LOGIN_FIELD)
+        return InputTextElement(self.find_visible_element(SignInLocators.LOGIN_FIELD))
+        # return self.find_visible_element(SignInLocators.LOGIN_FIELD)
 
     @property
     def password_field(self):
