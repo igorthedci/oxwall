@@ -1,2 +1,2 @@
-# oxwall_1
+# oxwall
 Learning Test project for Oxwall 
