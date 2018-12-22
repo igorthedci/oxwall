@@ -57,5 +57,4 @@ class InternalPage(Page):
     def go_main_page(self):
         self.main_menu.click()
 
-
-# TODO you can do other actions that are common to all internal pages
+    # TODO you can do other actions that are common to all internal pages

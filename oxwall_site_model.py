@@ -66,3 +66,9 @@ class OxwallSite:
     def is_dashboard_page(self):
         time.sleep(3)
         return self.is_element_present(By.XPATH, "/html/body/div[1]/div[4]/div/div/div/h1")
+
+    def get_newsfeed_users(self):
+        return self.driver.find_elements(By.CSS_SELECTOR, "div.ow_newsfeed_string.ow_small.ow_smallmargin > a")
+
+    def get_newsfeed_times(self):
+        return self.driver.find_elements(By.CSS_SELECTOR, "div.ow_newsfeed_btns.ow_small.ow_remark.clearfix > a")

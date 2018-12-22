@@ -22,9 +22,20 @@ def app():
     # app.close()
     pass
 
+
 @pytest.fixture()
+def login_user(app):
+    app.login('admin', 'Adm1n')
+    yield
+    app.logout()
+
+@pytest.fixture()
+def admin_user_old(app):
+    return {'username': 'admin', 'password': 'Adm1n'}
+
+@pytest.fixture
 def admin_user():
-    return User(username="admin", password="pass")
+    return User(username='admin', password='Adm1n')
 
 @pytest.fixture()
 def user():

@@ -1,5 +1,7 @@
-from page_object.internal_pages import InternalPage
+from oxwall_site_model import OxwallSite
+from page_objects.internal_page import InternalPage
 from page_objects.signin_page import SignInPage
+from value_models.status import Status
 
 
 def test_positive_login(driver, user):

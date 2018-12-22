@@ -2,6 +2,8 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support.expected_conditions import visibility_of_element_located
+from selenium.webdriver.support.expected_conditions import visibility_of_element_located
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class Page:
@@ -14,6 +16,11 @@ class Page:
         try:
             self.driver.find_element(*locator)
         except NoSuchElementException as e:
+
+    def is_element_present(self, locator):
+        try:
+            element = app.driver.find_element(locator)
+        except NoSuchElementException:
             return False
         return True
 
@@ -26,3 +33,6 @@ class Page:
     @property
     def current_url(self):
         return self.driver.current_url
+    def find_clickable_element(self, locator):
+        return self.wait.until(clickability_of_element_located(locator))
+

@@ -1,13 +1,18 @@
 from selenium.webdriver.common.by import By
 
+
+class InternalPageLocators:
 # TOP NAVIGATOR
-MENU_SIGNIN_BUTTON = (By.CSS_SELECTOR, "span[class*='_signin_'")
-MENU_USER_ICON = (By.XPATH, "//div[@class='ow_console_items_wrap']/div[5]")
-MENU_USER_LOGOUT = (By.XPATH, "//a[contains(@href,'sign-out')]")
+    MENU_SIGNIN_BUTTON = (By.CSS_SELECTOR, "span[class*='_signin_'")
+    MENU_USER_ICON = (By.XPATH, "//div[@class='ow_console_items_wrap']/div[5]")
+    MENU_USER_LOGOUT = (By.XPATH, "//a[contains(@href,'sign-out')]")
+    MY_DASHBOARD_TEXT = (By.CSS_SELECTOR, "h1[class*='ow_ic_house']")
 
 # SIGN_IN_MENU = (By.XPATH, '//*[contains(@id,"console_item")]/span[1]')
-SIGN_IN_MENU = (By.CSS_SELECTOR, "a[class*='console'][href*='/user/']")
-SIGN_OUT_MENU = (By.CSS_SELECTOR, "a[href*='sign-out']")
+    SIGN_IN_MENU = (By.CSS_SELECTOR, "a[class*='console'][href*='/user/']")
+    SIGN_OUT_MENU = (By.CSS_SELECTOR, "a[href*='sign-out']")
+
+    USER_MENU = (By.CSS_SELECTOR, "div[class*='dropdown_hover']")
 
 
 # NEWSFEED
