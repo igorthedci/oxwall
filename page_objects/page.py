@@ -15,11 +15,6 @@ class Page:
     def is_element_present(self, locator):
         try:
             self.driver.find_element(*locator)
-        except NoSuchElementException as e:
-
-    def is_element_present(self, locator):
-        try:
-            element = app.driver.find_element(locator)
         except NoSuchElementException:
             return False
         return True
@@ -33,6 +28,7 @@ class Page:
     @property
     def current_url(self):
         return self.driver.current_url
+
     def find_clickable_element(self, locator):
         return self.wait.until(clickability_of_element_located(locator))
 
