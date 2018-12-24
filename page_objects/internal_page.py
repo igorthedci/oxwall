@@ -1,32 +1,45 @@
 from selenium.common.exceptions import NoSuchElementException
-from locators.locator import InternalPageLocators as locators
+# from locators.locator import InternalPageLocators as locators
+from selenium.webdriver.common.by import By
+
 from page_objects.page import Page
 
 
 class InternalPage(Page):
+
+    # LOCATORS
+    ACTIVE_MENU = (By.XPATH, "//div[contains(@class, 'ow_menu_wrap')]//li[contains(@class, 'active')]")
+    DASHBOARD_MENU = (By.LINK_TEXT, "DASHBOARD")
+    MAIN_MENU = (By.LINK_TEXT, "MAIN")
+    PHOTO_MENU = ()  # TODO
+    # TODO Add other menu locators
+    SIGN_IN_MENU = (By.XPATH, '//*[contains(@id,"console_item")]/span[1]')
+    USER_MENU = (By.XPATH, "//div[contains(@class,'ow_console_dropdown_hover')]")
+    SIGN_OUT_LINK = (By.XPATH, './/a[contains(@href,"sign-out")]')
+
     def is_logged_in(self):
-        return self.is_element_present(locators.USER_MENU)
+        return self.is_element_present(self.USER_MENU)
 
     def is_logged_in_as(self, user):
         return self.user_menu.text == user.username.title()
 
     @property
     def active_menu(self):
-        return self.find_visible_element(locators.ACTIVE_MENU)
+        return self.find_visible_element(self.ACTIVE_MENU)
 
     @property
     def dashboard_menu(self):
-        return self.find_visible_element(locators.DASHBOARD_MENU)
+        return self.find_visible_element(self.DASHBOARD_MENU)
 
     @property
     def main_menu(self):
-        return self.find_visible_element(locators.MAIN_MENU)
+        return self.find_visible_element(self.MAIN_MENU)
 
     # TODO Add other Nav menu
 
     @property
     def sign_in_menu(self):
-        locator = locators.SIGN_IN_MENU
+        locator = self.SIGN_IN_MENU
         if not self.is_logged_in():
             return self.find_visible_element(locator)
         else:
@@ -39,7 +52,7 @@ class InternalPage(Page):
 
     @property
     def user_menu(self):
-        locator = locators.USER_MENU
+        locator = self.USER_MENU
         if self.is_logged_in():
             return self.find_visible_element(locator)
         else:
@@ -47,7 +60,7 @@ class InternalPage(Page):
 
     @property
     def sign_out_link(self):
-        return self.find_visible_element(locators.SIGN_OUT_LINK)
+        return self.find_visible_element(self.SIGN_OUT_LINK)
 
     # Nav Actions:
     def sign_out(self):

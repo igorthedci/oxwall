@@ -1,3 +1,5 @@
+from selenium.webdriver.common.by import By
+
 from page_objects.internal_page import InternalPage
 from page_objects.page import InputTextElement
 

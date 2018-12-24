@@ -5,6 +5,18 @@ from locators.locator import SignInLocators
 
 
 class SignInPage(Page):
+
+    # Login windows locators
+    SIGNIN_USERNAME = (By.CSS_SELECTOR, "input[name='identity']")
+    SIGNIN_PASSWORD = (By.CSS_SELECTOR, "input[name='password']")
+    SIGNIN_REMEMBER_CHECKBOX = (By.CSS_SELECTOR, "input[name='remember']")
+    SIGNIN_SUBMIT_BUTTON = (By.CSS_SELECTOR, "input[name='submit']")
+
+    LOGIN_FIELD = (By.NAME, 'identity')
+    PASS_FIELD = (By.NAME, 'password')
+
+    LOGIN_BACKGROUND = (By.ID, "floatbox_overlay")
+
     # def __init__(self, driver):
     #     super().__init__(driver)
     #     self.username_field = self.find_visible_element(locator.LOGIN_FIELD)

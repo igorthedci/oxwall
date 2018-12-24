@@ -5,6 +5,9 @@ from page_objects.signin_page import SignInPage
 from value_models.user import User
 
 
+@pytest.mark.parametrize("status_text", status_data, ids=["Alphanum", "Cyrillic", "Symbols"])
+
+
 # TODO: parametrize to users, add non-admin users
 def test_positive_login(driver):
     user = User(username="admin", password="Adm1n")
