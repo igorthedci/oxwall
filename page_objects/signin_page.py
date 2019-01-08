@@ -1,3 +1,5 @@
+import time
+
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.expected_conditions import invisibility_of_element_located
@@ -81,6 +83,7 @@ if __name__ == "__main__":
     sign_in_page.password_field.clear()
     sign_in_page.password_field.send_keys("some_pass")
     sign_in_page.sign_in_button.click()
+    time.sleep(1)
 
     # 2nd type of using:
     sign_in_page.input_username("admin")
