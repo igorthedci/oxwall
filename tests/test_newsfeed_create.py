@@ -4,10 +4,9 @@ from oxwall_site_model import OxwallSite
 from value_models.status import Status
 from data.status_data import status_data
 
-# status_data = ["alfa098tEXT", "Привіт", "!№:41!6№!"]
 
-
-@pytest.mark.parametrize("status_text", status_data, ids=["Alphanum", "Cyrillic", "Symbols"])
+@pytest.mark.parametrize("status_text", status_data)
+# @pytest.mark.parametrize("status_text", status_data, ids=["Alphanum", "Cyrillic", "Symbols"])
 def test_add_text_status(driver, signed_in_user, status_text):
     app = OxwallSite(driver)
     status = Status(text=status_text, user=signed_in_user)
