@@ -1,7 +1,8 @@
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.expected_conditions import invisibility_of_element_located
 
-from page_objects.page import Page, InputTextElement
-from locators.locator import SignInLocators
+from page_objects.page import Page
 
 
 class SignInPage(Page):
@@ -16,6 +17,9 @@ class SignInPage(Page):
     PASS_FIELD = (By.NAME, 'password')
 
     LOGIN_BACKGROUND = (By.ID, "floatbox_overlay")
+    LOGIN_WINDOW_BOX = (By.CLASS_NAME, "floatbox_container")
+    ERROR_MESSAGE = (By.CSS_SELECTOR, "div.error")
+    ERROR_CLOSE_BUTTON = (By.CSS_SELECTOR, "a.close_button")
 
     # def __init__(self, driver):
     #     super().__init__(driver)
@@ -24,19 +28,23 @@ class SignInPage(Page):
 
     @property
     def username_field(self):
-        return InputTextElement(self.find_visible_element(SignInLocators.LOGIN_FIELD))
+        return self.find_visible_element(self.LOGIN_FIELD)
+        # return InputTextElement(self.find_visible_element(SignInLocators.LOGIN_FIELD))
         # return self.find_visible_element(SignInLocators.LOGIN_FIELD)
 
     @property
     def password_field(self):
-        return self.find_visible_element(SignInLocators.PASS_FIELD)
+        return self.find_visible_element(self.PASS_FIELD)
+        # return self.find_visible_element(SignInLocators.PASS_FIELD)
 
     @property
     def sign_in_button(self):
-        return self.find_visible_element(SignInLocators.SIGN_IN_BUTTON)
+        return self.find_visible_element(self.SIGNIN_SUBMIT_BUTTON)
+        # return self.find_visible_element(SignInLocators.SIGN_IN_BUTTON)
 
     def is_this_page(self):
-        return self.is_element_present(SignInLocators.LOGIN_WINDOW_BOX)
+        return self.is_element_present(self.LOGIN_WINDOW_BOX)
+        # return self.is_element_present(SignInLocators.LOGIN_WINDOW_BOX)
 
     def input_username(self, username):
         self.username_field.clear()
@@ -48,13 +56,19 @@ class SignInPage(Page):
 
     def submit_form(self):
         self.sign_in_button.click()
-        self.wait.until(invisibility_of_element_located(SignInLocators.LOGIN_BACKGROUND))
+        locator = self.LOGIN_BACKGROUND
+        try:
+            self.wait.until(invisibility_of_element_located(locator))
+        except TimeoutException:
+            raise NoSuchElementException("No element by locator {}".format(locator))
 
 
 if __name__ == "__main__":
+
     from selenium import webdriver
     driver = webdriver.Chrome()
     driver.get("http://127.0.0.1/oxwall")
+
     from page_objects.main_page import MainPage
     main_page = MainPage(driver)
     main_page.sign_in_menu.click()
@@ -69,6 +83,6 @@ if __name__ == "__main__":
     sign_in_page.sign_in_button.click()
 
     # 2nd type of using:
-    sign_in_page.input_username("something")
-    sign_in_page.input_password("some_pass")
+    sign_in_page.input_username("admin")
+    sign_in_page.input_password("Adm1n")
     sign_in_page.submit_form()

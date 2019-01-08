@@ -1,8 +1,6 @@
-import time
-
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
-from page_objects import newsfeed_page
+from obsolete import newsfeed_page
 
 
 def test_comment_delete(app, login_user):

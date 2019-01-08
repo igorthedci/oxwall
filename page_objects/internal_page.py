@@ -12,10 +12,16 @@ class InternalPage(Page):
     DASHBOARD_MENU = (By.LINK_TEXT, "DASHBOARD")
     MAIN_MENU = (By.LINK_TEXT, "MAIN")
     PHOTO_MENU = ()  # TODO
+
     # TODO Add other menu locators
     SIGN_IN_MENU = (By.XPATH, '//*[contains(@id,"console_item")]/span[1]')
+    SIGN_UP_MENU = (By.CSS_SELECTOR, 'a.ow_console_item_link[href*="join"]')
     USER_MENU = (By.XPATH, "//div[contains(@class,'ow_console_dropdown_hover')]")
     SIGN_OUT_LINK = (By.XPATH, './/a[contains(@href,"sign-out")]')
+
+    def __init__(self, driver):
+        super().__init__(driver)
+        # self.sign_in_menu = self.find_visible_element(locators.SIGN_IN_MENU)
 
     def is_logged_in(self):
         return self.is_element_present(self.USER_MENU)
@@ -69,5 +75,8 @@ class InternalPage(Page):
 
     def go_main_page(self):
         self.main_menu.click()
+
+    def go_signin_page(self):
+        self.sign_in_menu.click()
 
     # TODO you can do other actions that are common to all internal pages

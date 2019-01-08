@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-from page_objects import newsfeed_page
+from obsolete import newsfeed_page
 
 
 class Oxwall:
