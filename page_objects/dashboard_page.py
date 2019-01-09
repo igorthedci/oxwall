@@ -27,8 +27,8 @@ class StatusElement:
 
 class DashboardPage(InternalPage):
 
-    STATUS_TEXT_FIELD =(By.NAME, "status")
-    SEND_BUTTON =(By.NAME, "save")
+    STATUS_TEXT_FIELD = (By.NAME, "status")
+    SEND_BUTTON = (By.NAME, "save")
     STATUS_BOX = (By.XPATH, "//li[contains(@id, 'action-feed')]")
 
     # TODO Add all elements and actions that you have in Main Page

@@ -35,7 +35,7 @@ def login_user(app):
 
 @pytest.fixture
 def admin_user():
-    return User(username='admin', password='Adm1n')
+    return User(username='admin', password='Adm1n', real_name='Admin', is_admin=True)
 
 
 # user_data = [

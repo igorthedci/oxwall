@@ -23,5 +23,5 @@ class User:
 
 
 if __name__ == "__main__":
-    user = User("Masha", "Pupkin")
+    user = User("Misha", "Pupkin")
     print(user)

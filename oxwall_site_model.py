@@ -33,7 +33,7 @@ class OxwallSite:
 
     def logout_as(self, user):
         # TODO: add user_name assert
-        menu = self.main_page.user_menu()
+        menu = self.main_page.user_menu
         self.actions.move_to_element(menu).perform()
         self.main_page.sign_out_link.click()
 
@@ -51,7 +51,7 @@ class OxwallSite:
 
     def wait_until_new_status_appeared(self):
         # Wait until new status appear
-        time.sleep(2.2)
+        time.sleep(1.1)
 
     def get_newsfeed_list(self):
         return self.driver.find_elements_by_class_name("ow_newsfeed_content")
