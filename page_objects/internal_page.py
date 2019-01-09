@@ -16,6 +16,7 @@ class InternalPage(Page):
     USER_ICON = (By.CSS_SELECTOR, 'a.ow_console_item_link[href*="user"]')
 
     # TODO Add other menu locators
+    SIGN_IN_LABEL = (By.CSS_SELECTOR, 'span.ow_signin_label')
     SIGN_IN_MENU = (By.XPATH, '//*[contains(@id,"console_item")]/span[1]')
     SIGN_UP_MENU = (By.CSS_SELECTOR, 'a.ow_console_item_link[href*="join"]')
     USER_MENU = (By.XPATH, "//div[contains(@class,'ow_console_dropdown_hover')]")
@@ -27,7 +28,8 @@ class InternalPage(Page):
         # self.sign_in_menu = self.find_visible_element(locators.SIGN_IN_MENU)
 
     def is_logged_in(self):
-        return self.is_element_present(self.USER_ICON)
+        return self.is_element_present(self.SIGN_IN_LABEL) is False
+        # return self.is_element_present(self.USER_ICON)
 
     def is_logged_in_as(self, user):
         return self.user_menu.text == user.username.title()
@@ -48,7 +50,7 @@ class InternalPage(Page):
 
     @property
     def sign_in_menu(self):
-        locator = self.SIGN_IN_MENU
+        locator = self.SIGN_IN_LABEL
         if not self.is_logged_in():
             return self.find_visible_element(locator)
         else:
