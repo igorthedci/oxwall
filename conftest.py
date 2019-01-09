@@ -17,6 +17,7 @@ def driver():
     # Close browser
     driver.quit()
 
+
 @pytest.fixture()
 def app():
     app = OxwallSite()
@@ -30,11 +31,6 @@ def login_user(app):
     app.login('admin', 'Adm1n')
     yield
     app.logout()
-
-
-@pytest.fixture()
-def admin_user_old(app):
-    return {'username': 'admin', 'password': 'Adm1n'}
 
 
 @pytest.fixture
@@ -62,28 +58,35 @@ def admin_user():
 #         "is_admin": True
 #      }
 # ]
+
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 with open(os.path.join(PROJECT_DIR, "data", "user_data.json")) as f:
     user_data = json.load(f)
 
 
 @pytest.fixture(params=user_data, ids=[str(user) for user in user_data])
 def user(request):
-    # print(request.param)
-    # return User(username="admin", password="pass", real_name="Admin")
-    # return User(username=request.param["username"], password="pass", real_name="Admin")
     return User(**request.param)  # TODO: parametrize to non-admin users
 
 
+# @pytest.fixture()
+# def sign_in_session(app, admin_user):
+#     app.login_as(admin_user)
+#     yield user
+#     app.logout_as(admin_user)
+
+
 @pytest.fixture()
-def sign_in_session(app, admin_user):
-    app.login_as(admin_user)
+def signed_in_user(driver, user):
+    app = OxwallSite(driver)
+    app.login_as(user)
     yield user
-    app.logout_as(admin_user)
+    app.logout_as(user)
 
 
 @pytest.fixture()
 def logout(driver):
     yield
     app = OxwallSite(driver)
-    app.dash_page.signout()
+    app.dash_page.sign_out()
