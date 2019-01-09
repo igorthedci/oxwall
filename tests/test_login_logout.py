@@ -30,3 +30,4 @@ def test_admin_login_logout(driver, admin_user):
     time.sleep(1.1)
 
     app.logout_as(admin_user)
+    assert app.dash_page.is_logged_in() is False
