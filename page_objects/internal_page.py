@@ -8,23 +8,26 @@ from page_objects.page import Page
 class InternalPage(Page):
 
     # LOCATORS
+    OXWALL_LOGO = (By.CSS_SELECTOR, "a.ow_logo")
     ACTIVE_MENU = (By.XPATH, "//div[contains(@class, 'ow_menu_wrap')]//li[contains(@class, 'active')]")
     DASHBOARD_MENU = (By.LINK_TEXT, "DASHBOARD")
     MAIN_MENU = (By.LINK_TEXT, "MAIN")
     PHOTO_MENU = ()  # TODO
+    USER_ICON = (By.CSS_SELECTOR, 'a.ow_console_item_link[href*="user"]')
 
     # TODO Add other menu locators
     SIGN_IN_MENU = (By.XPATH, '//*[contains(@id,"console_item")]/span[1]')
     SIGN_UP_MENU = (By.CSS_SELECTOR, 'a.ow_console_item_link[href*="join"]')
     USER_MENU = (By.XPATH, "//div[contains(@class,'ow_console_dropdown_hover')]")
-    SIGN_OUT_LINK = (By.XPATH, './/a[contains(@href,"sign-out")]')
+    # SIGN_OUT_LINK = (By.XPATH, './/a[contains(@href,"sign-out")]')
+    SIGN_OUT_LINK = (By.CSS_SELECTOR, 'a[href*="sign-out"]')
 
     def __init__(self, driver):
         super().__init__(driver)
         # self.sign_in_menu = self.find_visible_element(locators.SIGN_IN_MENU)
 
     def is_logged_in(self):
-        return self.is_element_present(self.USER_MENU)
+        return self.is_element_present(self.USER_ICON)
 
     def is_logged_in_as(self, user):
         return self.user_menu.text == user.username.title()
@@ -58,7 +61,7 @@ class InternalPage(Page):
 
     @property
     def user_menu(self):
-        locator = self.USER_MENU
+        locator = self.USER_ICON
         if self.is_logged_in():
             return self.find_visible_element(locator)
         else:
@@ -70,7 +73,7 @@ class InternalPage(Page):
 
     # Nav Actions:
     def sign_out(self):
-        self.action_chain.move_to_element(self.user_menu).perform()
+        self.active_menu.move_to_element(self.user_menu).perform()
         self.sign_out_link.click()
 
     def go_main_page(self):

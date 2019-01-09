@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
@@ -26,27 +26,16 @@ class OxwallSite:
 
     def login_as(self, user):
         """ Login to Oxwall site by user"""
-        # driver = self.driver
         self.main_page.sign_in_menu.click()
-        # driver.find_element(*InternalPageLocators.SIGN_IN_MENU).click()
         self.sign_in_page.input_username(user.username)
         self.sign_in_page.input_password(user.password)
         self.sign_in_page.submit_form()
-        # login = driver.find_element(*SignInLocators.LOGIN_FIELD)
-        # login.click()
-        # login.send_keys(user.username)
-        # passw = driver.find_element(*SignInLocators.PASS_FIELD)
-        # passw.click()
-        # passw.send_keys(user.password)
-        # driver.find_element(*SignInLocators.SIGN_IN_BUTTON).click()
-        # Wait until grey background disappeared
-        # wait = WebDriverWait(driver, 5)
-        # wait.until(EC.invisibility_of_element_located(SignInLocators.LOGIN_BACKGROUND))
 
     def logout_as(self, user):
-        menu = self.driver.find_element(By.LINK_TEXT, user["username"].title())
+        # TODO: add user_name assert
+        menu = self.main_page.user_menu()
         self.actions.move_to_element(menu).perform()
-        self.driver.find_element(By.XPATH, './/a[contains(@href,"sign-out")]').click()
+        self.main_page.sign_out_link.click()
 
     def add_new_text_status(self, status):
         driver = self.driver
@@ -62,7 +51,7 @@ class OxwallSite:
 
     def wait_until_new_status_appeared(self):
         # Wait until new status appear
-        time.sleep(2)
+        time.sleep(2.2)
 
     def get_newsfeed_list(self):
         return self.driver.find_elements_by_class_name("ow_newsfeed_content")
