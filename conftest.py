@@ -38,6 +38,11 @@ def admin_user():
     return User(username='admin', password='Adm1n', real_name='Admin', is_admin=True)
 
 
+@pytest.fixture
+def tested_profile():
+    return User(username='admin', password='Adm1n', real_name='Admin', is_admin=True)
+
+
 # user_data = [
 #     {
 #         "username": "tester",

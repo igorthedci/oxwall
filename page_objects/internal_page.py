@@ -1,5 +1,4 @@
 from selenium.common.exceptions import NoSuchElementException
-# from locators.locator import InternalPageLocators as locators
 from selenium.webdriver.common.by import By
 
 from page_objects.page import Page
@@ -14,6 +13,7 @@ class InternalPage(Page):
     MAIN_MENU = (By.LINK_TEXT, "MAIN")
     PHOTO_MENU = ()  # TODO
     USER_ICON = (By.CSS_SELECTOR, 'a.ow_console_item_link[href*="user"]')
+    MENU_JOIN = (By.CSS_SELECTOR, '.ow_menu_wrap li>a[href*="join"]')
 
     # TODO Add other menu locators
     SIGN_IN_LABEL = (By.CSS_SELECTOR, 'span.ow_signin_label')
@@ -70,6 +70,10 @@ class InternalPage(Page):
             raise NoSuchElementException("No element by locator {}".format(locator))
 
     @property
+    def menu_join_link(self):
+        return self.find_visible_element(self.MENU_JOIN)
+
+    @property
     def sign_out_link(self):
         return self.find_visible_element(self.SIGN_OUT_LINK)
 
@@ -80,6 +84,9 @@ class InternalPage(Page):
 
     def go_main_page(self):
         self.main_menu.click()
+
+    def go_join_page(self):
+        self.menu_join_link.click()
 
     def go_signin_page(self):
         self.sign_in_menu.click()
