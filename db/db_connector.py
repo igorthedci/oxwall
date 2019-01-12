@@ -1,5 +1,8 @@
+import json
+
 import pymysql
 
+from value_models.status import Status
 from value_models.user import User
 
 
@@ -48,5 +51,31 @@ class DBConnector:
             cursor.execute(sql, (user.username,))  # tuple with one element
         self.connection.commit()
 
+    def get_last_text_status(self):
+        """ Get status with maximum id that is last added """
+        with self.connection.cursor() as cursor:
+            sql = """SELECT * FROM `ow_newsfeed_action` 
+                     WHERE `id`= (SELECT MAX(`id`) FROM `ow_newsfeed_action`)
+                     AND `entityType`="user-status"
+                     """
+            cursor.execute(sql)
+            response = cursor.fetchone()
+            data = json.loads(response["data"])
+        self.connection.commit()
+        return Status(text=data["status"])
+
+
+
     def close(self):
         self.connection.close()
+
+
+if __name__ == "__main__":
+    config = {
+        "host": "localhost",
+        "user": "oxwa128",
+        "password": "wSSp@g!657",
+        "db": "oxwa128"
+        }
+    db = DBConnector(config)
+    print(db.get_last_text_status())

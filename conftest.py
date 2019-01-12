@@ -45,27 +45,6 @@ def admin_user():
     return User(username='admin', password='Adm1n', real_name='Admin', is_admin=True)
 
 
-# user_data = [
-#     {
-#         "username": "tester",
-#         "password": "secret",
-#         "real_name": "How I am?",
-#         "is_admin": False
-#      },
-#     {
-#         "username": "tester",
-#         "password": "secret",
-#         "real_name": "How I am?",
-#         "is_admin": False
-#      },
-#     {
-#         "username": "admin",
-#         "password": "Adm1n",
-#         "real_name": "ADMIN",
-#         "is_admin": True
-#      }
-# ]
-
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 with open(os.path.join(PROJECT_DIR, "data", "user_data.json")) as f:
