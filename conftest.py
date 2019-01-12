@@ -7,11 +7,11 @@ from value_models.user import User
 
 
 @pytest.fixture(scope="session")
-def driver():
+def driver(selenium):
     # Open browser driver settings
-    driver = webdriver.Chrome()
+    driver = selenium
     driver.implicitly_wait(5)
-    driver.maximize_window()
+    # driver.maximize_window()
     driver.get('http://127.0.0.1/oxwall/')
     yield driver
     # Close browser
