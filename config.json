@@ -1,0 +1,14 @@
+{
+  "db": {
+     "host": "localhost",
+     "user": "oxwa128",
+     "password": "wSSp@g!657",
+     "db": "oxwa128"
+  },
+  "web": {
+    "admin": {
+      "username": "admin",
+      "password": "Admin"
+    }
+  }
+}

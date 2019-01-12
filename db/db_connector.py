@@ -12,16 +12,12 @@ def _our_hash(password):
 
 
 class DBConnector:
-    def __init__(self):
+    def __init__(self, db_config):
         # Connect to the database
-        self.connection = pymysql.connect(host='localhost',
-                             user='oxwa128',
-                             # user='root',
-                             password='wSSp@g!657',
-                             # password='mysql',
-                             db='oxwa128',
-                             charset='utf8mb4',
-                             cursorclass=pymysql.cursors.DictCursor)
+        self.connection = pymysql.connect(
+             **db_config,
+             charset='utf8mb4',
+             cursorclass=pymysql.cursors.DictCursor)
 
     def create_user(self, user):
         with connection.cursor() as cursor:
@@ -44,6 +40,13 @@ class DBConnector:
             # print(result)
         self.connection.commit()
         return [User(**u) for u in result]
+
+    def delete_user(self, user):
+        with self.connection.cursor() as cursor:
+            sql = """DELETE FROM `ow_base_user` 
+                    WHERE `ow_base_user`.`username` = %s"""
+            cursor.execute(sql, (user.username,))  # tuple with one element
+        self.connection.commit()
 
     def close(self):
         self.connection.close()
