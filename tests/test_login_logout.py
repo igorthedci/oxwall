@@ -1,33 +1,40 @@
 from oxwall_site_model import OxwallSite
-import time
+from page_objects.dashboard_page import DashboardPage
+from page_objects.main_page import MainPage
+from page_objects.signin_page import SignInPage
+from value_models.user import User
 
 
-def test_login_using_page_object(driver, user, logout):
+@pytest.mark.parametrize("status_text", status_data, ids=["Alphanum", "Cyrillic", "Symbols"])
+
+
+# TODO: parametrize to users, add non-admin users
+def test_positive_login(driver):
+    user = User(username="admin", password="Adm1n")
     app = OxwallSite(driver)
-    app.main_page.sign_in_click()
-    assert app.sign_in_page.is_this_page()
-    app.sign_in_page.username_field.input(user.username)
-    app.sign_in_page.password_field.input(user.password)
-    app.sign_in_page.submit_form()
-    assert app.dash_page.is_this_page()
-    assert app.dash_page.is_logged_in()
-    assert app.dash_page.user_menu.text == user.real_name
-    time.sleep(3.3)
+    app.login_as(user)
+    # TODO: verification that logged in, example: app.is_logged_in_as(user) or app.user_menu_is_present()
+    assert True
+    # TODO: verification that correct page is opened, example from Nazar: app.active_page == "DASHBOARD"
+    assert True
     app.logout_as(user)
+    # TODO: verification, again, other menu and page
+    assert True
 
 
-def test_admin_login_logout(driver, admin_user):
-    app = OxwallSite(driver)
-    app.main_page.go_signin_page()
-    assert app.sign_in_page.is_this_page()
-    app.sign_in_page.input_username(admin_user.username)
-    app.sign_in_page.input_password(admin_user.password)
-    app.sign_in_page.submit_form()
-
-    assert app.dash_page.is_this_page()
-    assert app.dash_page.is_logged_in()
-    assert app.dash_page.user_menu.text == admin_user.real_name
-    time.sleep(1.1)
-
-    app.logout_as(admin_user)
-    assert app.dash_page.is_logged_in() is False
+# TODO: parametrize to users, add non-admin users
+def test_login_using_page_object(driver, user, logout):
+    user = User(username="admin", password="pass")
+    main_page = MainPage(driver)
+    main_page.sign_in_menu.click()
+    sign_in_page = SignInPage(driver)
+    assert sign_in_page.is_this_page()
+    # sign_in_page.input_username(user.username)
+    sign_in_page.username_field.input(user.username)
+    # sign_in_page.input_password(user.password)
+    sign_in_page.password_field.input(user.password)
+    sign_in_page.submit_form()
+    dashboard_page = DashboardPage(driver)
+    assert dashboard_page.is_this_page()
+    assert dashboard_page.is_logged_in()
+    assert dashboard_page.is_logged_in_as(user)
