@@ -1,5 +1,4 @@
 import json
-
 import pymysql
 
 from value_models.status import Status
@@ -23,9 +22,10 @@ class DBConnector:
              cursorclass=pymysql.cursors.DictCursor)
 
     def create_user(self, user):
-        with connection.cursor() as cursor:
+        with self.connection.cursor() as cursor:
             # Create a new record
-            sql = 'INSERT INTO `ow_base_user` (`username`, `email`, `password`) VALUES ("{}", "{}", "{}")'
+            sql = '''INSERT INTO `ow_base_user` (`username`, `email`, `password`, `joinIp`)
+                  'VALUES ("{}", "{}", "{}", "{}");'''
             cursor.execute(sql.format(user.username, user.email, _our_hash(user.password), "3246457523435"))
             # cursor.execute(sql, ('webmaster@python.org', 'very-suecret'))
 
@@ -36,7 +36,7 @@ class DBConnector:
     def get_users(self):
         with self.connection.cursor() as cursor:
             # Read a single record
-            sql = "SELECT `id`, `username`, `password` FROM `ow_base_user`"
+            sql = "SELECT `id`, `username`, `password` FROM `ow_base_user`;"
             cursor.execute(sql)
             result = cursor.fetchall()
             # result = cursor.fetchone()
@@ -64,7 +64,15 @@ class DBConnector:
         self.connection.commit()
         return Status(text=data["status"])
 
-
+    def count_status(self):
+        with self.connection.cursor() as cursor:
+            sql = """SELECT COUNT(*) FROM `ow_newsfeed_action` 
+                     WHERE `entityType`="user-status"
+                  """
+            cursor.execute(sql)
+        self.connection.commit()
+        # print(cursor.fetchone())
+        return cursor.fetchone()['COUNT(*)']
 
     def close(self):
         self.connection.close()

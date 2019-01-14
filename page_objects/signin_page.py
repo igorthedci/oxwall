@@ -1,10 +1,10 @@
 import time
 
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.expected_conditions import invisibility_of_element_located
 
+from page_objects.dashboard_page import DashboardPage
 from page_objects.page import Page
+from page_objects.page_elements.input_text_field import InputTextElement
 
 
 class SignInPage(Page):
@@ -78,14 +78,6 @@ if __name__ == "__main__":
     sign_in_page = SignInPage(driver)
 
     # 1st type of using:
-    sign_in_page.username_field.clear()
-    sign_in_page.username_field.send_keys("something")
-    sign_in_page.password_field.clear()
-    sign_in_page.password_field.send_keys("some_pass")
-    sign_in_page.sign_in_button.click()
-    time.sleep(1)
-
-    # 2nd type of using:
-    sign_in_page.input_username("admin")
-    sign_in_page.input_password("Adm1n")
+    sign_in_page.username_field.input("admin")
+    sign_in_page.password_field.input("Adm1n")
     sign_in_page.submit_form()

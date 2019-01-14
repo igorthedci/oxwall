@@ -14,6 +14,13 @@ with open(os.path.join(PROJECT_DIR, "config.json")) as f:
 
 
 @pytest.fixture(scope="session")
+def db():
+    db = DBConnector(config["db"])
+    yield db
+    db.close()
+
+
+@pytest.fixture()
 def driver(selenium, base_url):
     # Open browser driver settings
     driver = selenium
@@ -25,39 +32,8 @@ def driver(selenium, base_url):
     driver.quit()
 
 
-@pytest.fixture()
-def app():
-    app = OxwallSite()
-    yield app
-    # app.close()
-    pass
-
-
-@pytest.fixture()
-def login_user(app):
-    app.login('admin', 'Adm1n')
-    yield
-    app.logout()
-
-
-@pytest.fixture
-def admin_user():
-    return User(username='admin', password='Adm1n', real_name='Admin', is_admin=True)
-
-
-PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-
 with open(os.path.join(PROJECT_DIR, "data", "user_data.json")) as f:
-    user_data = json.load(f)
-
-
-@pytest.fixture(scope="session")
-def db():
-    db = DBConnector(config["db"])
-    yield db
-    db.close()
-    # db.connection.close()
-
+user_data = json.load(f)
 
 @pytest.fixture(params=user_data, ids=[str(user) for user in user_data])
 def user(request, db):
@@ -67,19 +43,18 @@ def user(request, db):
     db.delete_user(user)
 
 
-# @pytest.fixture()
-# def sign_in_session(app, admin_user):
-#     app.login_as(admin_user)
-#     yield user
-#     app.logout_as(admin_user)
+@pytest.fixture()
+def admin():
+    params = config["web"]["admin"]
+    return User(**params, is_admin=True, real_name=params["username"].title())
 
 
 @pytest.fixture()
-def signed_in_user(driver, user):
+def signed_in_user(driver, admin):
     app = OxwallSite(driver)
-    app.login_as(user)
+    app.login_as(admin)
     yield user
-    app.logout_as(user)
+    app.logout_as(admin)
 
 
 @pytest.fixture()

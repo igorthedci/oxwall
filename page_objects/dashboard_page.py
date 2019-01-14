@@ -1,28 +1,9 @@
 from selenium.webdriver.common.by import By
 
+from page_objects.custom_expected_condition.expected_condition import amount_of_element_located
 from page_objects.internal_page import InternalPage
-from page_objects.page import InputTextElement
-
-
-class StatusElement:
-    STATUS_USER = (By.CSS_SELECTOR, ".ow_newsfeed_string.ow_small.ow_smallmargin > a")
-    STATUS_TEXT = (By.CSS_SELECTOR, ".ow_newsfeed_content")
-    STATUS_TIME = (By.CSS_SELECTOR, "a.create_time")
-
-    def __init__(self, webelement):
-        self.webelement = webelement
-
-    @property
-    def text(self):
-        return self.webelement.find_element(*self.STATUS_TEXT).text
-
-    @property
-    def user(self):
-        return self.webelement.find_element(*self.STATUS_USER).text
-
-    @property
-    def time(self):
-        return self.webelement.find_element(*self.STATUS_TIME).text
+from page_objects.page_elements.input_text_field import InputTextElement
+from page_objects.page_elements.status_box_element import StatusElement
 
 
 class DashboardPage(InternalPage):
