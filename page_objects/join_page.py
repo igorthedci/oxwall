@@ -7,12 +7,11 @@ from page_objects.internal_page import InternalPage
 class JoinPage(InternalPage):
 
     TITLE_LOCATOR = (By.CSS_SELECTOR, "h1.ow_ic_file")
-    USERNAME_TITLE = (By.CSS_SELECTOR, "tr:nth-of-type(3) label")
 
-    USERNAME_FIELD = (By.XPATH, '//label:contains"Username"')
-    # USERNAME_FIELD = (By.CSS_SELECTOR, "tr:nth-of-type(3) input")
+    USERNAME_TITLE = (By.XPATH, '//td[contains(@class,"ow_alt1")]/label[text()="Username"]')
+    USERNAME_FIELD = (By.XPATH, '//td[contains(@class,"ow_alt1")]/label[text()="Username"]/../..//input')
+    EMAIL_FIELD = (By.XPATH, '//td[contains(@class,"ow_alt1")]/label[text()="Email"]/../..//input')
 
-    EMAIL_FIELD = (By.CSS_SELECTOR, "input[name='email']")
     PASSWORD_FIELD = (By.CSS_SELECTOR, "input[name='password']")
     REPEATPASSWORD_FIELD = (By.CSS_SELECTOR, "input[name='repeatPassword']")
     REALNAME_FIELD = (By.CSS_SELECTOR, "tr:nth-of-type(15) input")
@@ -187,3 +186,4 @@ if __name__ == "__main__":
     join_page = JoinPage(driver)
 
     join_page.input_username("tested")
+    join_page.input_email("qq@qq.qq")
