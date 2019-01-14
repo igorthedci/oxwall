@@ -16,7 +16,7 @@ class OxwallSite:
     def __init__(self, driver):
         # Open Oxwall site
         self.driver = driver
-        self.driver.get('http://127.0.0.1/oxwall/')
+        # self.driver.get('http://127.0.0.1/oxwall/')
         self.wait = WebDriverWait(self.driver, 5)
         self.actions = ActionChains(self.driver)
 

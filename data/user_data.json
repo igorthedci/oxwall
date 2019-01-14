@@ -1,20 +1,16 @@
 [
     {
-        "username": "tester",
-        "password": "secret",
-        "real_name": "How I am?",
+        "username": "test01",
+        "password": "pass",
+        "real_name": "The User 01",
+        "email": "test01@qq.qq",
         "is_admin": false
      },
     {
-        "username": "tester",
-        "password": "secret",
-        "real_name": "How I am?",
+        "username": "test02",
+        "password": "pass",
+        "real_name": "The User 02",
+        "email": "test02@qq.qq",
         "is_admin": false
-     },
-    {
-        "username": "admin",
-        "password": "Adm1n",
-        "real_name": "ADMIN",
-        "is_admin": true
      }
 ]

@@ -1,18 +1,25 @@
 import json
 import os.path
 import pytest
-from selenium import webdriver
+
+from db.db_connector import DBConnector
 from oxwall_site_model import OxwallSite
 from value_models.user import User
 
 
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+with open(os.path.join(PROJECT_DIR, "config.json")) as f:
+    config = json.load(f)
+
+
 @pytest.fixture(scope="session")
-def driver():
+def driver(selenium, base_url):
     # Open browser driver settings
-    driver = webdriver.Chrome()
+    driver = selenium
     driver.implicitly_wait(5)
-    driver.maximize_window()
-    driver.get('http://127.0.0.1/oxwall/')
+    # driver.maximize_window()
+    driver.get(base_url)
     yield driver
     # Close browser
     driver.quit()
@@ -38,41 +45,26 @@ def admin_user():
     return User(username='admin', password='Adm1n', real_name='Admin', is_admin=True)
 
 
-@pytest.fixture
-def tested_profile():
-    return User(username='admin', password='Adm1n', real_name='Admin', is_admin=True)
-
-
-# user_data = [
-#     {
-#         "username": "tester",
-#         "password": "secret",
-#         "real_name": "How I am?",
-#         "is_admin": False
-#      },
-#     {
-#         "username": "tester",
-#         "password": "secret",
-#         "real_name": "How I am?",
-#         "is_admin": False
-#      },
-#     {
-#         "username": "admin",
-#         "password": "Adm1n",
-#         "real_name": "ADMIN",
-#         "is_admin": True
-#      }
-# ]
-
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 with open(os.path.join(PROJECT_DIR, "data", "user_data.json")) as f:
     user_data = json.load(f)
 
 
+@pytest.fixture(scope="session")
+def db():
+    db = DBConnector(config["db"])
+    yield db
+    db.close()
+    # db.connection.close()
+
+
 @pytest.fixture(params=user_data, ids=[str(user) for user in user_data])
-def user(request):
-    return User(**request.param)  # TODO: parametrize to non-admin users
+def user(request, db):
+    user = User(**request.param)  # TODO: parametrize to non-admin users
+    db.create_user(user)
+    yield user
+    db.delete_user(user)
 
 
 # @pytest.fixture()
