@@ -41,34 +41,10 @@ class OxwallSite:
         driver = self.driver
         # Write some text to Newsfeed form and send it
         newsfeed = driver.find_element_by_name("status")
-        newsfeed.click()
+        # newsfeed.click()
         newsfeed.clear()
-        newsfeed.click()
+        # newsfeed.click()
         newsfeed.send_keys(status.text)
         send_button = driver.find_element_by_name("save")
         send_button.click()
-        status.time_created = datetime.now()
-
-    def wait_until_new_status_appeared(self):
-        # Wait until new status appear
-        time.sleep(1.1)
-
-    def get_newsfeed_list(self):
-        return self.driver.find_elements_by_class_name("ow_newsfeed_content")
-
-    def is_element_present(self, how, what):
-        try:
-            self.driver.find_element(by=how, value=what)
-        except NoSuchElementException as e:
-            return False
-        return True
-
-    def is_dashboard_page(self):
-        time.sleep(3)
-        return self.is_element_present(By.XPATH, "/html/body/div[1]/div[4]/div/div/div/h1")
-
-    def get_newsfeed_users(self):
-        return self.driver.find_elements(By.CSS_SELECTOR, "div.ow_newsfeed_string.ow_small.ow_smallmargin > a")
-
-    def get_newsfeed_times(self):
-        return self.driver.find_elements(By.CSS_SELECTOR, "div.ow_newsfeed_btns.ow_small.ow_remark.clearfix > a")
+        # status.time_created = datetime.now()

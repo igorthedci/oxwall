@@ -33,7 +33,8 @@ def driver(selenium, base_url):
 
 
 with open(os.path.join(PROJECT_DIR, "data", "user_data.json")) as f:
-user_data = json.load(f)
+    user_data = json.load(f)
+
 
 @pytest.fixture(params=user_data, ids=[str(user) for user in user_data])
 def user(request, db):
